@@ -4,6 +4,11 @@ import { Server } from 'socket.io';
 import roomRoutes from './routes/roomRoutes';
 import messageRoutes from './routes/messageRoutes';
 import { setupChatSocket } from './sockets/chatSocket';
+import dotenv from "dotenv";
+import { connect } from './config/redis';
+
+// Load environment variables
+dotenv.config();
 
 
 const app = express();
@@ -22,4 +27,9 @@ setupChatSocket(io);
 const PORT = process.env.PORT;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+  try {
+    connect();
+  } catch (error) {
+    console.error(error);
+  }
 });

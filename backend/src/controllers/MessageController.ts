@@ -1,14 +1,15 @@
 import { Request,Response } from "express";
 import MessageService from '../service/MessageService';
+import {  sendErrorResponse, sendSuccessResponse } from "../utils/ApiError";
 
 export default class MessageController{
     static async getMessage(req:Request,res:Response){
         try {
            const {roomId}= req.params;
        const message=await MessageService.getMessages(roomId);
-       res.status(200).json(message);
+       sendSuccessResponse(res,200,message)
         } catch (error) {
-            res.status(500).json({message:'Error fetching message',error});
+            sendErrorResponse(res,500,'Error in fetching message',error);
         }
     }
 
@@ -17,9 +18,9 @@ export default class MessageController{
             const {roomId}=req.params;
             const {content,userName}=req.body;
             const message=await MessageService.addMessage(roomId,content,userName);
-            res.status(201).json(message);
+            sendSuccessResponse(res,201,message)
         } catch (error) {
-            res.status(500).json({message:'Error fetching message',error});
+            sendErrorResponse(res,500,'Error adding message',error);
         }
     }
 }
