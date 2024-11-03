@@ -33,3 +33,10 @@ server.listen(PORT, () => {
     console.error(error);
   }
 });
+
+
+//http://localhost:5124/api/rooms/create  for POST
+//http://localhost:5124/api/rooms for GET
+//http://localhost:5124/api/rooms/room-id for DELETE
+//http://localhost:5124/api/messages/room-id for POST
+//http://localhost:5124/api/messages/room-id for GET
