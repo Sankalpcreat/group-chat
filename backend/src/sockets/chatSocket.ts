@@ -1,6 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import RoomService from '../services/RoomService';
-import MessageService from '../services/MessageService';
+import MessageService from '../service/MessageService';
 
 export function setupChatSocket(io: Server) {
     //making conenction acrtiv
