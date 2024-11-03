@@ -1,7 +1,7 @@
-export interface Room {
-    id: string;
-    name: string;
-    users: string[]; 
-    createdAt: Date;
-  }
-  
+// src/models/Message.ts
+export interface Message {
+  id: string;
+  content: string;
+  userName: string;
+  timestamp: Date;
+}

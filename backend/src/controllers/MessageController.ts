@@ -5,7 +5,7 @@ export default class MessageController{
     static async getMessage(req:Request,res:Response){
         try {
            const {roomId}= req.params;
-       const message=await MessageService.getMessage(roomId);
+       const message=await MessageService.getMessages(roomId);
        res.status(200).json(message);
         } catch (error) {
             res.status(500).json({message:'Error fetching message',error});

@@ -3,7 +3,7 @@ import { Room } from "../models/Room";
 import {v4 as uuidv4} from 'uuid';
 
 const ROOM_LIMIT=20;
-const Room_TTL=360 //10min timeout
+const ROOM_TTL=360 //10min timeout
 
 export default class RoomService{
     static async createRoom(name:string):Promise<Room>{
@@ -28,6 +28,10 @@ export default class RoomService{
         await redisClient.expire(`room:${roomId}`, ROOM_TTL);
         return newRoom;
     }
+    static async deleteRoom(roomId: string): Promise<void> {
+      await redisClient.del(roomId); 
+    }
+  
 
     static async getRooms(): Promise<Room[]> {
         const roomIds = await redisClient.smembers('rooms');//get all room id to members
