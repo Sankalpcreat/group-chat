@@ -1,11 +1,11 @@
 // src/service/MessageService.ts
 import redisClient from '../config/redis';
-import { Message } from '../models/Message'; // Correct import
+import { Message } from '../models/Message'; 
 
 const MESSAGE_LIMIT = 100;
 
 export default class MessageService {
-  static async getMessages(roomId: string): Promise<Message[]> { // Corrected method name here
+  static async getMessages(roomId: string): Promise<Message[]> { 
     const messages = await redisClient.lrange(`room:${roomId}:messages`, 0, -1);
     return messages.map((message) => JSON.parse(message));
   }
