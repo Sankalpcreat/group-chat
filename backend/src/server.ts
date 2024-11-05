@@ -33,3 +33,10 @@ server.listen(PORT, () => {
     console.error(error);
   }
 });
+// http://localhost:5124/api/rooms/create POST for room creation
+// http://localhost:5124/api/rooms -GET to get all rooms
+// http://localhost:5124/api/rooms/:roomId/join -POST join particular room by room id
+// http://localhost:5124/api/rooms/:roomId/leave -POST  Leave particular room by roomID
+// http://localhost:5124/api/rooms/:roomId -DELETE  Delete Particular room by room ID
+// http://localhost:5124/api/messages/:roomId -POST Post message to particular room id
+// http://localhost:5124/api/messages/:roomId -GET  Get Latest 100 message

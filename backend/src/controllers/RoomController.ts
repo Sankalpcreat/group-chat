@@ -24,6 +24,17 @@ export default class RoomController{
       sendErrorResponse(res, 500, 'Error creating room', error);
     }
   }
+  static async joinRoom(req: Request, res: Response) {
+    const { roomId } = req.params;
+    const { userName } = req.body;
+    console.log("Joining room:", roomId, "with user:", userName);
+    try {
+        const updatedRoom = await RoomService.joinRoom(roomId, userName);
+        sendSuccessResponse(res, 200, updatedRoom);
+    } catch (error) {
+        sendErrorResponse(res, 500, 'Error joining room', error);
+    }
+  }
 
 
     static async deleteRoom(req: Request, res: Response) {
