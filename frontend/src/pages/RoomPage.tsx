@@ -1,7 +1,7 @@
 // src/pages/RoomPage.tsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ChatBox from '../components/Chat/ChatBox';
+import ChatBox from '../components/Chat/CharBox';
 import MessageInput from '../components/Chat/MessageInput';
 import GuestLoginPopup from '../components/Popup/GuestLoginPopup';
 import useSocket from '../hooks/useSocket';
