@@ -19,7 +19,7 @@ const GuestLoginPopup: React.FC<GuestLoginPopupProps> = ({ isVisible, onClose, o
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="fixed inset-0 bg-black/60 flex justify-center items-center">
       <div className="bg-white p-6 rounded shadow-lg max-w-sm w-full">
         <h2 className="text-xl font-bold mb-4">Enter Guest Details</h2>
         <input

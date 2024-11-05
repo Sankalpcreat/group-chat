@@ -8,9 +8,12 @@ export function setupChatSocket(io: Server) {
   io.on('connection', (socket: Socket) => {
     console.log(`User connected: ${socket.id}`);
 
+   
+
     // Joining the room
     socket.on('joinRoom', async ({ roomId, userName }) => {
       socket.join(roomId);
+      console.log("user joined");
       io.to(roomId).emit('userJoined', { userName });
 
       // Loading messages in the room
@@ -22,6 +25,7 @@ export function setupChatSocket(io: Server) {
     socket.on('createRoom', async (roomName: string) => {
       try {
         const newRoom = await RoomService.createRoom(roomName);
+        console.log("Create Room ");
         io.emit('newRoom', newRoom); // Broadcast the new room to all clients
       } catch (error) {
         console.error('Error creating room:', error);
@@ -31,12 +35,16 @@ export function setupChatSocket(io: Server) {
     // Sending a message in real-time
     socket.on('sendMessage', async ({ roomId, content, userName }) => {
       const message = await MessageService.addMessage(roomId, content, userName);
+      console.log("message send")
       io.to(roomId).emit('newMessage', message);
     });
 
     // Leaving the room
     socket.on('leaveRoom', ({ roomId, userName }) => {
+
+
       socket.leave(roomId);
+      console.log("left room")
       io.to(roomId).emit('userLeft', { userName });
     });
 

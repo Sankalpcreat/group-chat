@@ -1,15 +1,15 @@
 import { Request,Response } from "express";
 import RoomService from '../service/RoomService';
 import {  sendErrorResponse, sendSuccessResponse } from "../utils/ApiError";
-import { Server } from 'socket.io';
+// import { Server } from 'socket.io';
 
 
 export default class RoomController{
-  static io: Server; 
+  // static io: Server; 
 
-  static initialize(io: Server) {
-    RoomController.io = io;
-  }
+  // static initialize(io: Server) {
+  //   RoomController.io = io;
+  // }
   static async createRoom(req: Request, res: Response) {
     try {
       const { name } = req.body;
@@ -19,11 +19,12 @@ export default class RoomController{
       sendSuccessResponse(res, 201, room);
 
      
-      RoomController.io.emit('newRoom', room);
+      // RoomController.io.emit('newRoom', room);
     } catch (error) {
       sendErrorResponse(res, 500, 'Error creating room', error);
     }
   }
+  
   static async joinRoom(req: Request, res: Response) {
     const { roomId } = req.params;
     const { userName } = req.body;
@@ -56,3 +57,4 @@ export default class RoomController{
         }
       }
     }
+
