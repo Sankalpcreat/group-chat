@@ -1,18 +1,30 @@
 import { Request,Response } from "express";
 import RoomService from '../service/RoomService';
 import {  sendErrorResponse, sendSuccessResponse } from "../utils/ApiError";
+import { Server } from 'socket.io';
+
 
 export default class RoomController{
-    static async createRoom(req:Request,res:Response){
-        try {
-            const {name}=req.body;
-            const room =await RoomService.createRoom(name);
-            sendSuccessResponse(res, 201, room);
-        } catch (error) {
-          sendErrorResponse(res, 500, 'Error creating room', error);
+  static io: Server; 
 
-        }
+  static initialize(io: Server) {
+    RoomController.io = io;
+  }
+  static async createRoom(req: Request, res: Response) {
+    try {
+      const { name } = req.body;
+      const room = await RoomService.createRoom(name);
+
+    
+      sendSuccessResponse(res, 201, room);
+
+     
+      RoomController.io.emit('newRoom', room);
+    } catch (error) {
+      sendErrorResponse(res, 500, 'Error creating room', error);
     }
+  }
+
 
     static async deleteRoom(req: Request, res: Response) {
         try {

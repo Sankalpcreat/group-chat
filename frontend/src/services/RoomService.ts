@@ -20,7 +20,7 @@ class RoomService {
   static async createRoom(name: string): Promise<Room> {
     try {
       const response = await axios.post<Room>(`${API_BASE_URL}/rooms/create`, { name });
-      return response.data.data;
+      return response.data.data.data;
     } catch (error) {
       console.error('Error creating room:', error);
       throw error;

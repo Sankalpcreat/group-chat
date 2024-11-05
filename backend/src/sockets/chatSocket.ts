@@ -4,33 +4,43 @@ import MessageService from '../service/MessageService';
 
 export function setupChatSocket(io: Server) {
 
-    //making connection active
+  // Making connection active
   io.on('connection', (socket: Socket) => {
     console.log(`User connected: ${socket.id}`);
 
-    //joining the room
+    // Joining the room
     socket.on('joinRoom', async ({ roomId, userName }) => {
       socket.join(roomId);
       io.to(roomId).emit('userJoined', { userName });
 
-        //showing the message
+      // Loading messages in the room
       const messages = await MessageService.getMessages(roomId);
       socket.emit('loadMessages', messages);
     });
 
-    //send message real time 
+    // Creating a room
+    socket.on('createRoom', async (roomName: string) => {
+      try {
+        const newRoom = await RoomService.createRoom(roomName);
+        io.emit('newRoom', newRoom); // Broadcast the new room to all clients
+      } catch (error) {
+        console.error('Error creating room:', error);
+      }
+    });
+
+    // Sending a message in real-time
     socket.on('sendMessage', async ({ roomId, content, userName }) => {
       const message = await MessageService.addMessage(roomId, content, userName);
       io.to(roomId).emit('newMessage', message);
     });
 
-    //leaving the room 
+    // Leaving the room
     socket.on('leaveRoom', ({ roomId, userName }) => {
       socket.leave(roomId);
       io.to(roomId).emit('userLeft', { userName });
     });
 
-    //disconnect the socket at end after no chat is there
+    // Disconnecting the socket when no chat is there
     socket.on('disconnect', () => {
       console.log(`User disconnected: ${socket.id}`);
     });
