@@ -8,7 +8,8 @@ class RoomService {
   static async getRooms(): Promise<Room[]> {
     try {
       const response = await axios.get<Room[]>(`${API_BASE_URL}/rooms`);
-      return response.data;
+      console.log("Fetched rooms:", response.data.data); 
+      return response.data.data;
     } catch (error) {
       console.error('Error fetching rooms:', error);
       throw error;
@@ -19,7 +20,7 @@ class RoomService {
   static async createRoom(name: string): Promise<Room> {
     try {
       const response = await axios.post<Room>(`${API_BASE_URL}/rooms/create`, { name });
-      return response.data;
+      return response.data.data;
     } catch (error) {
       console.error('Error creating room:', error);
       throw error;
