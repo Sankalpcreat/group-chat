@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-
-interface GuestLoginPopupProps {
-  isVisible: boolean;
-  onClose: () => void;
-  onLogin: (name: string, age: number) => void;
-}
+import { GuestLoginPopupProps } from '../../types/GuestLoginPopup';
+import { UserName, UserAge } from '../../types/User';
 
 const GuestLoginPopup: React.FC<GuestLoginPopupProps> = ({ isVisible, onClose, onLogin }) => {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
+  const [name, setName] = useState<UserName>('');  
+  const [age, setAge] = useState<UserAge>('');    
 
   const handleLogin = () => {
     const ageNumber = parseInt(age, 10);
