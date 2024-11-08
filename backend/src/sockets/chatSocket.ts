@@ -26,7 +26,7 @@ export function setupChatSocket(io: Server) {
       try {
         const newRoom = await RoomService.createRoom(roomName);
         console.log("Create Room ");
-        io.emit('newRoom', newRoom); // Broadcast the new room to all clients
+        io.emit('newRoom', newRoom); 
       } catch (error) {
         console.error('Error creating room:', error);
       }
