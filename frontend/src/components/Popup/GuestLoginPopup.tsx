@@ -1,45 +1,43 @@
 import React, { useState } from 'react';
-import { GuestLoginPopupProps } from '../../types/GuestLoginPopup';
-import { UserName, UserAge } from '../../types/User';
+
+interface GuestLoginPopupProps {
+  isVisible: boolean;
+  onClose: () => void;
+  onLogin: (userName: string) => void;
+}
 
 const GuestLoginPopup: React.FC<GuestLoginPopupProps> = ({ isVisible, onClose, onLogin }) => {
-  const [name, setName] = useState<UserName>('');  
-  const [age, setAge] = useState<UserAge>('');    
+  const [name, setName] = useState('');
 
   const handleLogin = () => {
-    const ageNumber = parseInt(age, 10);
-    if (name.trim() && ageNumber > 0) {
-      onLogin(name, ageNumber);
-      onClose();
-    } else {
-      alert('Please enter a valid name and age.');
+    if (name.trim() !== '') {
+      onLogin(name);
+      setName('');
     }
   };
 
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex justify-center items-center">
-      <div className="bg-white p-6 rounded shadow-lg max-w-sm w-full">
-        <h2 className="text-xl font-bold mb-4">Enter Guest Details</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+        <h2 className="text-xl font-semibold mb-4">Enter your name to join</h2>
         <input
           type="text"
-          placeholder="Name"
+          className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4"
+          placeholder="Your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
         />
-        <input
-          type="number"
-          placeholder="Age"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
-        />
-        <div className="flex justify-end">
-          <button onClick={onClose} className="mr-4 text-gray-600">Cancel</button>
-          <button onClick={handleLogin} className="bg-blue-500 text-white p-2 rounded">Login</button>
-        </div>
+        <button
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 w-full"
+          onClick={handleLogin}
+        >
+          Join
+        </button>
+        <button className="mt-2 text-sm text-gray-600" onClick={onClose}>
+          Cancel
+        </button>
       </div>
     </div>
   );
