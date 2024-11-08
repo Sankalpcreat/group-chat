@@ -8,22 +8,27 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');
 
   const handleSend = () => {
-    if (message.trim()) {
+    if (message.trim() !== '') {
       onSendMessage(message);
       setMessage('');
     }
   };
 
   return (
-    <div className="message-input flex items-center border-t p-2">
+    <div className="mt-4 flex">
       <input
         type="text"
+        className="flex-1 border border-gray-300 rounded-l-lg px-4 py-2 focus:outline-none"
+        placeholder="Type a message..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type your message..."
-        className="flex-grow p-2 border rounded mr-2"
       />
-      <button onClick={handleSend} className="bg-blue-300 text-white p-2 rounded">Send</button>
+      <button
+        className="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700"
+        onClick={handleSend}
+      >
+        Send
+      </button>
     </div>
   );
 };

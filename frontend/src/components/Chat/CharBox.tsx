@@ -7,11 +7,11 @@ interface ChatBoxProps {
 
 const ChatBox: React.FC<ChatBoxProps> = ({ messages }) => {
   return (
-    <div className="chat-box overflow-y-auto p-4 bg-gray-100 h-full">
+    <div className="h-64 border border-gray-300 rounded-lg overflow-y-scroll p-4 bg-white">
       {messages.map((message) => (
         <div key={message.id} className="mb-2">
-          <strong>{message.userName}:</strong> {message.content}
-          <div className="text-xs text-gray-500">{new Date(message.timestamp).toLocaleTimeString()}</div>
+          <strong>{message.userName}:</strong> <span>{message.content}</span>
+          <div className="text-xs text-gray-400">{new Date(message.timestamp).toLocaleString()}</div>
         </div>
       ))}
     </div>
