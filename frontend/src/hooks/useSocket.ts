@@ -16,7 +16,8 @@ const useSocket = (url: string, options: UseSocketOptions) => {
   const socket = useRef<Socket | null>(null);
 
   useEffect(() => {
-    socket.current = io(url);
+    socket.current = io('https://group-chat-9rix.onrender.com');
+
 
     socket.current.on('connect', () => {
       console.log('Connected to Socket.IO server');
@@ -31,7 +32,7 @@ const useSocket = (url: string, options: UseSocketOptions) => {
     return () => {
       socket.current?.disconnect();
     };
-  }, [url, onMessage, onNewRoom, onUserJoined, onUserLeft, onLoadMessages]);
+  }, [onMessage, onNewRoom, onUserJoined, onUserLeft, onLoadMessages]);
 
   const joinRoom = (roomId: string, userName: string) => {
     socket.current?.emit('joinRoom', { roomId, userName });

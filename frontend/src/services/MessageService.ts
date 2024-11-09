@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { Message } from '../types/Message';
 
-const API_BASE_URL = 'http://localhost:5124/api';
+const API_BASE_URL = 'https://group-chat-9rix.onrender.com/api';
 
 class MessageService {
- 
   static async getMessages(roomId: string): Promise<Message[]> {
     try {
       const response = await axios.get<Message[]>(`${API_BASE_URL}/messages/${roomId}`);
@@ -15,8 +14,7 @@ class MessageService {
     }
   }
 
- 
-  static async addMessage(roomId: string, content: string, userName: string): Promise<Message> {
+  static async postMessage(roomId: string, content: string, userName: string): Promise<Message> {
     try {
       const response = await axios.post<Message>(`${API_BASE_URL}/messages/${roomId}`, {
         content,
@@ -24,7 +22,7 @@ class MessageService {
       });
       return response.data;
     } catch (error) {
-      console.error('Error adding message:', error);
+      console.error('Error posting message:', error);
       throw error;
     }
   }

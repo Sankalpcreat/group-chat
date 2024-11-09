@@ -12,7 +12,7 @@ const HomePage: React.FC = () => {
   const [userName, setUserName] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const { createRoom } = useSocket('http://localhost:5124', {
+  const { createRoom } = useSocket('https://group-chat-9rix.onrender.com', {
     onMessage: () => {},
     onNewRoom: (newRoom: Room) => setRooms((prev) => [...prev, newRoom]),
     onUserJoined: () => {},

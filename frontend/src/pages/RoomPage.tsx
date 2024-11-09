@@ -10,7 +10,7 @@ const RoomPage: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [userName, setUserName] = useState<string | null>('User'); // Example username
 
-  const { joinRoom, sendMessage } = useSocket('http://localhost:5124', {
+  const { joinRoom, sendMessage } = useSocket('https://group-chat-9rix.onrender.com', {
     onMessage: (message: Message) => setMessages((prev) => [...prev, message]),
     onNewRoom: () => {},
     onUserJoined: () => {},
