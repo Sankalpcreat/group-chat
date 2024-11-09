@@ -12,8 +12,7 @@ dotenv.config();
 
 const app = express();
 
-
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({ origin: 'https://group-chat-9rix.onrender.com' })); 
 
 app.use(express.json());
 
@@ -21,7 +20,13 @@ app.use('/api/rooms', roomRoutes);
 app.use('/api/messages', messageRoutes);
 
 const server = createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
+const io = new Server(server, { 
+  cors: { 
+    origin: 'https://group-chat-9rix.onrender.com', // Ensure CORS matches frontend
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
+});
 setupChatSocket(io);
 
 const PORT = process.env.PORT || 5124;
@@ -33,10 +38,3 @@ server.listen(PORT, () => {
     console.error(error);
   }
 });
-// http://localhost:5124/api/rooms/create POST for room creation
-// http://localhost:5124/api/rooms -GET to get all rooms
-// http://localhost:5124/api/rooms/:roomId/join -POST join particular room by room id
-// http://localhost:5124/api/rooms/:roomId/leave -POST  Leave particular room by roomID
-// http://localhost:5124/api/rooms/:roomId -DELETE  Delete Particular room by room ID
-// http://localhost:5124/api/messages/:roomId -POST Post message to particular room id
-// http://localhost:5124/api/messages/:roomId -GET  Get Latest 100 message

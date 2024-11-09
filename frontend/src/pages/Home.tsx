@@ -25,8 +25,16 @@ const HomePage: React.FC = () => {
       const data = await RoomService.getRooms();
       setRooms(data);
     };
+
+
+    const storedUserName = localStorage.getItem('userName');
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+
     fetchRooms();
   }, []);
+
 
   const handleCreateRoom = async () => {
     const roomName = prompt('Enter room name:');
@@ -37,6 +45,7 @@ const HomePage: React.FC = () => {
 
   const handleLogin = (name: string) => {
     setUserName(name);
+    localStorage.setItem('userName', name);
     setGuestPopupVisible(false);
   };
 
