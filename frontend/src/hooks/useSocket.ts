@@ -21,21 +21,25 @@ const useSocket = (url: string, options: UseSocketOptions) => {
       transports: ['websocket'],
     });
 
-
     socket.current.on('connect', () => {
       console.log('Connected to Socket.IO server');
     });
 
+
     socket.current.on('newMessage', onMessage);
-    socket.current.on('newRoom', onNewRoom);
+    socket.current.on('newRoom', (newRoom: Room) => {
+      console.log('Received newRoom event:', newRoom); 
+      onNewRoom(newRoom);
+    });
     socket.current.on('userJoined', ({ userName }: { userName: string }) => onUserJoined(userName));
     socket.current.on('userLeft', ({ userName }: { userName: string }) => onUserLeft(userName));
     socket.current.on('loadMessages', onLoadMessages);
 
+    // Clean up the socket connection when the component unmounts
     return () => {
       socket.current?.disconnect();
     };
-  }, [onMessage, onNewRoom, onUserJoined, onUserLeft, onLoadMessages]);
+  }, [url, onMessage, onNewRoom, onUserJoined, onUserLeft, onLoadMessages]);
 
   const joinRoom = (roomId: string, userName: string) => {
     socket.current?.emit('joinRoom', { roomId, userName });

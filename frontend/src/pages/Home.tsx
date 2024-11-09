@@ -14,7 +14,13 @@ const HomePage: React.FC = () => {
 
   const { createRoom } = useSocket('https://group-chat-9rix.onrender.com', {
     onMessage: () => {},
-    onNewRoom: (newRoom: Room) => setRooms((prev) => [...prev, newRoom]),
+    onNewRoom: (newRoom: Room) => {
+      console.log('Received newRoom event:', newRoom); 
+      setRooms((prevRooms) => {
+        console.log('Updating room list with new room:', newRoom); 
+        return [...prevRooms, newRoom];
+      });
+    },
     onUserJoined: () => {},
     onUserLeft: () => {},
     onLoadMessages: () => {},
