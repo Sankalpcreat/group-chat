@@ -25,7 +25,7 @@ export function setupChatSocket(io: Server) {
     socket.on('createRoom', async (roomName: string) => {
       try {
         const newRoom = await RoomService.createRoom(roomName);
-        console.log("Create Room ");
+        console.log('Emitting newRoom event with:', newRoom);
         io.emit('newRoom', newRoom); 
       } catch (error) {
         console.error('Error creating room:', error);
