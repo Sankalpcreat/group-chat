@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Message } from '../types/Message';
 
-const API_BASE_URL = 'https://group-chat-9rix.onrender.com/api';
+const API_BASE_URL = 'https://group-chat-9rix.onrender.com/api/messages';
 
 class MessageService {
   static async getMessages(roomId: string): Promise<Message[]> {

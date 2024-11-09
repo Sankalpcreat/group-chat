@@ -16,7 +16,10 @@ const useSocket = (url: string, options: UseSocketOptions) => {
   const socket = useRef<Socket | null>(null);
 
   useEffect(() => {
-    socket.current = io('https://group-chat-9rix.onrender.com');
+    socket.current = io('https://group-chat-9rix.onrender.com', {
+      reconnection: true,
+      transports: ['websocket'],
+    });
 
 
     socket.current.on('connect', () => {

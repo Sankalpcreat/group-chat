@@ -4,6 +4,7 @@ import MessageInput from '../components/Chat/MessageInput';
 import { useParams } from 'react-router-dom';
 import useSocket from '../hooks/useSocket';
 import { Message } from '../types/Message';
+import MessageService from '../services/MessageService';
 
 const RoomPage: React.FC = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -19,14 +20,37 @@ const RoomPage: React.FC = () => {
   });
 
   useEffect(() => {
-    if (roomId && userName) {
-      joinRoom(roomId, userName);
+    if (roomId) {
+      // Load messages when the room is opened
+      const fetchMessages = async () => {
+        try {
+          const data = await MessageService.getMessages(roomId);
+          setMessages(data);
+        } catch (error) {
+          console.error('Error loading messages:', error);
+        }
+      };
+
+      fetchMessages();
+
+      // Join the room via socket
+      if (userName) {
+        joinRoom(roomId, userName);
+      }
     }
   }, [roomId, userName, joinRoom]);
 
-  const handleSendMessage = (content: string) => {
+  const handleSendMessage = async (content: string) => {
     if (roomId && userName) {
+      // Send the message via socket
       sendMessage(roomId, content, userName);
+
+      // Optionally, post the message via HTTP for persistence
+      try {
+        await MessageService.addMessage(roomId, content, userName);
+      } catch (error) {
+        console.error('Error sending message:', error);
+      }
     }
   };
 
